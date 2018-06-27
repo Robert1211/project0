@@ -1,6 +1,6 @@
 let player1=""
 let player2=""
-let turn = "";  //declare let name all time difrent//
+let turn = "";
 let playerOneIsNext = true;
 
 const grid = [
@@ -12,63 +12,85 @@ let Winner ='';
 let MoveCount = 0;
 
 const winnerCheck = function(player){
-  if( (grid[0][0] === grid[0][1]) && (grid[0][0] === grid[0][1]) && (grid[0][2] === player) ||
-      (grid[1][0] === grid[1][1]) && (grid[1][0] === grid[1][1]) && (grid[1][2] === player) ||
-      (grid[2][0] === grid[2][1]) && (grid[2][0] === grid[2][1]) && (grid[2][0] === player) ||
+  if( (grid[0][0] === grid[0][1]) && (grid[0][0] === grid[0][2]) && (grid[0][0] === player) ||
+      (grid[1][0] === grid[1][1]) && (grid[1][0] === grid[1][2]) && (grid[1][0] === player) ||
+      (grid[2][0] === grid[2][1]) && (grid[2][0] === grid[2][2]) && (grid[2][0] === player) ||
 
 
-     (grid[0][0] === grid[1][0]) && (grid[0][0] === grid[1][0]) && (grid[2][0] === player) ||
-     (grid[0][1] === grid[1][1]) && (grid[0][1] === grid[1][1]) && (grid[2][1] === player) ||
-     (grid[0][2] === grid[1][2]) && (grid[0][2] === grid[1][2]) && (grid[2][2] === player) ||
+     (grid[0][0] === grid[1][0]) && (grid[0][0] === grid[2][0]) && (grid[0][0] === player) ||
+     (grid[0][1] === grid[1][1]) && (grid[0][1] === grid[2][1]) && (grid[0][1] === player) ||
+     (grid[0][2] === grid[1][2]) && (grid[0][2] === grid[2][2]) && (grid[0][2] === player) ||
 
 
     (grid[0][0] === grid[1][1]) && (grid[0][0] === grid[2][2]) && (grid[0][0] === player) ||
     (grid[0][2] === grid[1][1]) && (grid[0][2] === grid[2][0]) && (grid[0][2] === player) )
     {
+      boardMsg(player + " is winner!");
+      Winner = player;
+      MoveCount=0;
+      return true;
+    } else if(MoveCount === 8 ){
 
-    boardMsg(player + " is winner!");
-    Winner = player;
-    MoveCount=0;
-    return true;
-  }
-}
+     boardMsg('Draw')
+     return false;
+    }
+};
+// function make arey empty any time//
+const resetF = function(){
+ for (var i = 0; i < grid.length; i++) {
+   let innerArray = grid[i]
+     for (var j = 0; j < innerArray.length; j++) {
+      innerArray[j] = ""
+    }
+       $('.col').text('');
+    }
+};
+
+$("#reset").click(function(){
+  resetF();
+});
+
 const playTurn = function (row, column) {
-  if ( playerOneIsNext === true ) {
-    // place an "X" into the grid[num]
+  if ( playerOneIsNext === true ) {    // place an "X" into the grid[num]
     grid[row][column] = 'X';
-    // render() - draw the contents of grid to the screen
-    const result = winnerCheck("X");
-    if (result === true) {
-
+     const result = winnerCheck("X");
+      if (result === true) {
     }
     playerOneIsNext = false;
 
-    //} //
-    // checkForDraw()
-    // playerOneIsNext = false
-  } else if ( playerOneIsNext === false ){
-    // place an "O" into the grid[num]
-    grid[row][column] = 'O';
-    // render() - draw the contents of grid to the screen
-    winnerCheck("O")
-    // checkForDraw()
-     playerOneIsNext = true
-  }
-}
+    }else if ( playerOneIsNext === false ){  // playerOneIsNext = false
+     grid[row][column] = 'O';               // place an "O" into the grid[num]
+      winnerCheck("O")
+       playerOneIsNext = true                 // checkForDraw()
+   }
+    MoveCount = MoveCount + 1;
 
+};
 
-
-function boardMsg(X){
+  function boardMsg(X){
   return $("#result").html(X); //replace html on 'text'
-};//end function
+};
+
+    $(".col").click(function (){
+    // if this square is already occupied then return and don't place a new piece here.
+    if ( $(this).text() !== "" ) {
+      return;
+    }
+     if (playerOneIsNext) {
+       $(this).text("X")
+
+     } else{
+       $(this).text("O")
+     }
+     let row = $(this).parent().index();
+     let column = $(this).index();
+     playTurn(row, column);
+
+    });
 
 
-// $(".col").click(function (){
-//   let row = $(this).parent().index(); //if player click any .col div then conditon checking who is play now
-//     let column = $(this).index();
-//     playTurn(row, column);
-// });
-
+ //another version
+/*
 $('#0').click( function () {
   if (playerOneIsNext) {
     $('#0').text("X")
@@ -148,4 +170,4 @@ $('#8').click( function () {
     $('#8').text("0")
   }
   playTurn(2,2)
-});
+});*/
