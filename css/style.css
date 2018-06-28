@@ -34,7 +34,10 @@ background-position: center;
   width: 100%;
   height: 150px;
   margin: auto;
-  padding: inherit;
+  padding: ;
+  color: black;
+  font-size: 140px;
+
 }
 .col{
   border: 3px solid #9E9E99;
@@ -45,13 +48,8 @@ background-position: center;
   height: 145.5px;
   text-align: center;
   float: left;
-  font-size: 140px;
-  color: black;
   cursor: pointer;  // when mouse go to box change for pointer//
 }
-
-
-
 #result{
   font-size: 80px;
   text-align: center;
@@ -73,6 +71,16 @@ color:#FFEB3B; ;  text-shadow: black 0.1em 0.1em 0.2em;*/
   background-color: orange;
   text-shadow: black 0.1em 0.1em 1.2em;
 }
+
+@media (max-width: 800px) {
+  .reset1 {
+    top: initial;
+    right: 50%;
+    bottom: -64px;
+    margin-right: -70px;
+  }
+}
+
 .title{
   color: #2bffeb; text-shadow: black 0.1em 0.1em 0.2em;
   font-size: 10vw;
@@ -81,8 +89,4 @@ color:#FFEB3B; ;  text-shadow: black 0.1em 0.1em 0.2em;*/
 text-align: center;
 font-family: 'Dokdo', cursive;
 word-spacing: 12px;
-/*color: #2bffeb;*/
 }
-/*#photo{
-background-image: url('https://i.imgur.com/niKGWWp_lq.mp4');
-}*/
