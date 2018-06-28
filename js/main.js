@@ -28,12 +28,21 @@ const winnerCheck = function(player){
       boardMsg(player + " is winner!");
       Winner = player;
       MoveCount=0;
+      $('body').addClass('gameOver');         //add new class name for winner
+      setTimeout(function () {
+        $('body').removeClass('gameOver');
+      }, 900);    //change time
       return true;
     } else if(MoveCount === 8 ){
 
      boardMsg('Draw')
+     $('body').addClass('gameOver');           //add new class name for Draw
+     setTimeout(function () {
+       $('body').removeClass('gameOver');    //revove class comeback to old background
+      }, 900);
      return false;
-    }
+   }
+
 };
 // function make arey empty any time//
 const resetF = function(){
@@ -42,15 +51,19 @@ const resetF = function(){
      for (var j = 0; j < innerArray.length; j++) {
       innerArray[j] = ""
     }
-       $('.col').text('');
+       $('.col').text('');       //give me empty storge
+       $('#result').text('');    //give me empty storge
+
     }
 };
 
-$("#reset").click(function(){
+$("#reset").click(function(){      // call for function reset
   resetF();
 });
 
 const playTurn = function (row, column) {
+
+  // console.log(row, column);
   if ( playerOneIsNext === true ) {    // place an "X" into the grid[num]
     grid[row][column] = 'X';
      const result = winnerCheck("X");
@@ -64,7 +77,7 @@ const playTurn = function (row, column) {
        playerOneIsNext = true                 // checkForDraw()
    }
     MoveCount = MoveCount + 1;
-
+      console.log(MoveCount);
 };
 
   function boardMsg(X){
@@ -82,7 +95,7 @@ const playTurn = function (row, column) {
      } else{
        $(this).text("O")
      }
-     let row = $(this).parent().index();
+     let row = $(this).parent().index() - 2; // -2 to ignore the <button> and the bg that is in the game
      let column = $(this).index();
      playTurn(row, column);
 
