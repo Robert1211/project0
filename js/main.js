@@ -1,8 +1,9 @@
+//decler base varibles//
 let player1 = ""
 let player2 = ""
 let turn = "";
 let playerOneIsNext = true;
- //create array//
+ //create array (now I know, create 1 simply array not 3 in 1 //
 const grid = [
   ['', '', ''],
   ['', '', ''],
@@ -11,7 +12,7 @@ const grid = [
 //declere varibles for Winer,MoveCount//
 let Winner = '';
 let MoveCount = 0;
-//create function with logic about who win or loss;//
+//create engine(brain) program function with logic about who win or loss;//
 const winnerCheck = function(player) {
   if((grid[0][0] === grid[0][1]) && (grid[0][0] === grid[0][2]) && (grid[0][0] === player) ||
     (grid[1][0] === grid[1][1]) && (grid[1][0] === grid[1][2]) && (grid[1][0] === player) ||
@@ -28,16 +29,16 @@ const winnerCheck = function(player) {
     boardMsg(player + " is winner!");
     Winner = player;
     MoveCount = 0;
-    //function for change img background with setTimeout
+    // add function for change img background with setTimeout
     //add new class gameOver name
     $('body').addClass('gameOver');
     setTimeout(function() {
       $('body').removeClass('gameOver');
-    }, 900);
+    }, 1000);
     //if is true show in boardMsg whow is winner//
     return true;
     //add new conditional for DRAW
-    //  MoveCount = 0;                              //dodane
+    //  MoveCount = 0;
   } else if (MoveCount === 8) {
     boardMsg('Draw');
     return false;
@@ -45,31 +46,31 @@ const winnerCheck = function(player) {
     $('body').addClass('gameOver');
     setTimeout(function() {
     $('body').removeClass('gameOver');
-    }, 900);
+  }, 800);
     return false;
   }
 };
- // create function for refresh browser loop insaid loop//
+ // create function for refresh browser I use  loop insaid loop, becouse I have array inside array /
   const resetF = function() {
     for (var i = 0; i < grid.length; i++) {
     let innerArray = grid[i]
     for (var j = 0; j < innerArray.length; j++) {
       innerArray[j] = ""
     }
-    //print in html empty string for all marks 'X' and 'Y'
+    //clean my display after result, print in html empty string for all marks 'X' and 'Y'
     $('.col').text('');
     //print in html empty string for result in display
     $('#result').text('');
       MoveCount = 0;        //Move = 0
   }
 };
-    // call for function reset//
+    // call for function  button reset//
     $("#reset").click(function() {
     resetF();
 });
 //create function for playTurn ('who is next')//
   const playTurn = function(row, column) {
-    // place an "X" into the grid[num]
+    // place an "X" into the grid[row][column]
     if (playerOneIsNext === true) {
     grid[row][column] = 'X';
   const result = winnerCheck("X");
@@ -77,16 +78,16 @@ const winnerCheck = function(player) {
     playerOneIsNext = false;
     // playerOneIsNext = false
   } else if (playerOneIsNext === false) {
-    // place an "O" into the grid[num]
+    // place an "O" into the grid[row][column]
     grid[row][column] = 'O';
-    winnerCheck("O");   //ad const result
+    winnerCheck("O");
     playerOneIsNext = true
   }
       MoveCount = MoveCount + 1;
-      //testing play turn in console;
+      //testing play turn in console help me alot;
       console.log(MoveCount);
 };
-
+   //function for display msg in display
   function boardMsg(X) {
   return $("#result").html(X); //replace html on 'text'
 };
