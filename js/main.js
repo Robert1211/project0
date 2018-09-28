@@ -1,19 +1,15 @@
-//decler base varibles//
-let player1 = ""
+let player1 = ""                            //decler base varibles//
 let player2 = ""
 let turn = "";
 let playerOneIsNext = true;
- //create array (now I know next ti, create 1 simply array not 3 in 1 //
-const grid = [
+const grid = [                              //create array (now I know next ti, create 1 simply array not 3 in 1 //
   ['', '', ''],
   ['', '', ''],
   ['', '', '']
 ];
-  //declere varibles for Winer,MoveCount//
-let Winner = '';
+let Winner = '';                            //declere varibles for Winer,MoveCount//
 let MoveCount = 0;
-  //create engine(brain) program function with logic about who win or loss;//
-const winnerCheck = function(player) {
+const winnerCheck = function(player) {      //create engine(brain) program function with logic about who win or loss;//
   if((grid[0][0] === grid[0][1]) && (grid[0][0] === grid[0][2]) && (grid[0][0] === player) ||
     (grid[1][0] === grid[1][1]) && (grid[1][0] === grid[1][2]) && (grid[1][0] === player) ||
     (grid[2][0] === grid[2][1]) && (grid[2][0] === grid[2][2]) && (grid[2][0] === player) ||
@@ -29,84 +25,65 @@ const winnerCheck = function(player) {
     boardMsg(player + " is winner!");
     Winner = player;
     MoveCount = 0;
-    //add function for change img background with setTimeout
-    //add new class gameOver name
-     $('body').addClass('gameOver');
-     setTimeout(function() {
-       $('body').removeClass('gameOver');
-     }, 1000);
-    //if is true show in boardMsg whow is winner//
-     return true;
-    //add new conditional for DRAW
-    //  MoveCount = 0;
-  } else if (MoveCount === 8) {
-      boardMsg('Draw');
+      $('body').addClass('gameOver');         //add function for change img background with setTimeout
+      setTimeout(function() {                 //add new class gameOver name
+        $('body').removeClass('gameOver');
+      }, 1000);
+     return true;                             //if is true show in boardMsg whow is winner//
+  } else if (MoveCount === 8) {               //add new conditional for DRAW
+      boardMsg('Draw');                       //  MoveCount = 0;
       return false;
-       //add function for firs add after remove class in change img background//
-       $('body').addClass('gameOver');
+       $('body').addClass('gameOver');        //add function for firs add after remove class in change img background//
         setTimeout(function() {
           $('body').removeClass('gameOver');
         }, 800);
          return false;
     }
 };
-        // create function for refresh browser I use  loop insaid loop, becouse I have array inside array /
-const resetF = function() {
+const resetF = function() {                   // create function for refresh browser I use loop insaid loop, array inside array
   for (var i = 0; i < grid.length; i++) {
     let innerArray = grid[i]
       for (var j = 0; j < innerArray.length; j++) {
         innerArray[j] = ""
       }
-       //clean my display after result, print in html empty string for all marks 'X' and 'Y'
-      $('.col').text('');
-      //print in html empty string for result in display
-      $('#result').text('');
-      MoveCount = 0;
-      //Move = 0
+      $('.col').text('');                    //clean my display after result, print in html empty string for all marks 'X' and 'Y'
+      $('#result').text('');                 //print in html empty string for result in display
+      MoveCount = 0;                         //Move = 0
   }
 };
-       // call for function  button reset//
-      $("#reset").click(function() {
+      $("#reset").click(function() {         // call for function  button reset//
         resetF();
       });
-       //create function for playTurn ('who is next')//
-const playTurn = function(row, column) {
-      // place an "X" into the grid[row][column]
-    if (playerOneIsNext === true) {
-      grid[row][column] = 'X';
-      const result = winnerCheck("X");
-      if (result === true) {}
-      playerOneIsNext = false;
-      // playerOneIsNext = false
-    } else if (playerOneIsNext === false) {
-       // place an "O" into the grid[row][column]
-        grid[row][column] = 'O';
-        winnerCheck("O");
-        playerOneIsNext = true
-      }
+const playTurn = function(row, column) {     //create function for playTurn ('who is next')//
+  if (playerOneIsNext === true) {            // place an "X" into the grid[row][column]
+    grid[row][column] = 'X';
+    const result = winnerCheck("X");
+    if (result === true) {}
+    playerOneIsNext = false;
+  } else if (playerOneIsNext === false) {     // playerOneIsNext = false
+      grid[row][column] = 'O';                // place an "O" into the grid[row][column]
+      winnerCheck("O");
+      playerOneIsNext = true
+    }
     MoveCount = MoveCount + 1;
-       //testing play turn in console help me alot;
     console.log(MoveCount);
 };
-     //function for display msg in display
-function boardMsg(X) {
-   return $("#result").html(X);
-     //replace html on 'text'
+function boardMsg(X) {                         //function for display msg in display
+  return $("#result").html(X);                 //replace html on 'text'
 };
 
 $(".col").click(function() {
-     // if this square is already occupied then return and don't place a new piece here.
-    if ($(this).text() !== "") {
-      return;
-    }
-    if (playerOneIsNext) {
-      $(this).text("X")
-    } else {
+  if ($(this).text() !== "") {                 // if this square is already occupied then return and don't place a new piece here.
+    return;
+  }
+  if (playerOneIsNext) {
+    $(this).text("X")
+  } else {
       $(this).text("O")
     }
-  let row = $(this).parent().index() - 2; // -2 to ignore the <button> and the bg that is  in the game
-  let column = $(this).index();
-  playTurn(row, column);
+    let row = $(this).parent().index() - 2;     // -2 to ignore the <button> and the bg that is  in the game
+    let column = $(this).index();
+    playTurn(row, column);
 });
 
 ////////////////////////////////////////////////////////////////////////////////
